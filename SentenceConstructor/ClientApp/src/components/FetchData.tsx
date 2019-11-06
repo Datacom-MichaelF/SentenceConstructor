@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 
-export class FetchData extends Component {
+class Forecast {
+  date: Date | undefined
+  temperatureC: string | undefined
+  temperatureF: string | undefined
+  summary: string | undefined
+}
+
+type FetchDataState = {
+  forecasts: Forecast[],
+  loading: boolean
+}
+
+export class FetchData extends Component<{}, FetchDataState> {
   static displayName = FetchData.name;
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = { forecasts: [], loading: true };
   }
@@ -12,7 +24,7 @@ export class FetchData extends Component {
     this.populateWeatherData();
   }
 
-  static renderForecastsTable(forecasts) {
+  static renderForecastsTable(forecasts: Forecast[]) {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -25,7 +37,7 @@ export class FetchData extends Component {
         </thead>
         <tbody>
           {forecasts.map(forecast =>
-            <tr key={forecast.date}>
+            <tr key={forecast.date!.toString()}>
               <td>{forecast.date}</td>
               <td>{forecast.temperatureC}</td>
               <td>{forecast.temperatureF}</td>
